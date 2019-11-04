@@ -13,10 +13,10 @@ namespace Datos.SqlServer
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ForumEntities : DbContext
+    public partial class FarumEntities : DbContext
     {
-        public ForumEntities()
-            : base("name=ForumEntities")
+        public FarumEntities()
+            : base("name=FarumEntities")
         {
         }
     

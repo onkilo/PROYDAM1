@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Entidades", "3.Entidades"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Negocio", "4.Negocio", "{2D7B3257-D44A-4E41-98D1-0BCE2C148536}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForumApi", "ForumApi\ForumApi.csproj", "{BCB9FC57-B190-4F19-BFF8-BCDCB030F53A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarumApi", "ForumApi\FarumApi.csproj", "{BCB9FC57-B190-4F19-BFF8-BCDCB030F53A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datos.SqlServer", "Datos.SqlServer\Datos.SqlServer.csproj", "{68D88FE3-F30A-483F-ACB5-FD03C48CF249}"
 EndProject

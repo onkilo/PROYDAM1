@@ -12,7 +12,7 @@ namespace Negocio
     public class GeneroManager
     {
 
-        ForumEntities context = new ForumEntities();
+        FarumEntities context = new FarumEntities();
 
         public List<GeneroBE> GetAll()
         {
