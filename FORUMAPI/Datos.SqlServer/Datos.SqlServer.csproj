@@ -51,67 +51,62 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Autor.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ForumModel.Context.cs">
+    <Compile Include="FarumModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ForumModel.Context.tt</DependentUpon>
+      <DependentUpon>FarumModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ForumModel.cs">
+    <Compile Include="FarumModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ForumModel.Designer.cs">
+    <Compile Include="FarumModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ForumModel.edmx</DependentUpon>
+      <DependentUpon>FarumModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Genero.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Intercambio.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Libro.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Usuario.cs">
-      <DependentUpon>ForumModel.tt</DependentUpon>
+      <DependentUpon>FarumModel.tt</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="ForumModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ForumModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ForumModel.edmx.diagram">
-      <DependentUpon>ForumModel.edmx</DependentUpon>
+    <EntityDeploy Include="FarumModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FarumModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FarumModel.edmx.diagram">
+      <DependentUpon>FarumModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ForumModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ForumModel.Context.cs</LastGenOutput>
-      <DependentUpon>ForumModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="ForumModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ForumModel.edmx</DependentUpon>
-      <LastGenOutput>ForumModel.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="FarumModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FarumModel.edmx</DependentUpon>
+      <LastGenOutput>FarumModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FarumModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FarumModel.edmx</DependentUpon>
+      <LastGenOutput>FarumModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

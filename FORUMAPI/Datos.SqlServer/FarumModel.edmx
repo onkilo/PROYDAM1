@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ForumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FarumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="IdAutor" />
@@ -30,8 +30,10 @@
           <Property Name="IdUsuDestino" Type="int" />
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="FechaIniciado" Type="date" />
+          <Property Name="HoraIntercambio" Type="varchar" MaxLength="10" />
           <Property Name="FechaAceptado" Type="date" />
-          <Property Name="IdLibro" Type="int" />
+          <Property Name="IdLibroElegido" Type="int" />
+          <Property Name="IdLibroOfrecido" Type="int" />
           <Property Name="Activo" Type="char" MaxLength="2" />
           <Property Name="Estado" Type="varchar" MaxLength="2" />
         </EntityType>
@@ -51,16 +53,6 @@
           <Property Name="IdUsuario" Type="int" />
           <Property Name="Activo" Type="char" MaxLength="2" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -73,7 +65,7 @@
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="Activo" Type="char" MaxLength="2" />
         </EntityType>
-        <Association Name="fk_inter_libro">
+        <Association Name="fk_inter_libroelegido">
           <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
           <End Role="Intercambio" Type="Self.Intercambio" Multiplicity="*" />
           <ReferentialConstraint>
@@ -81,7 +73,19 @@
               <PropertyRef Name="IdLibro" />
             </Principal>
             <Dependent Role="Intercambio">
+              <PropertyRef Name="IdLibroElegido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inter_libroofrecido">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
+          <End Role="Intercambio" Type="Self.Intercambio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
               <PropertyRef Name="IdLibro" />
+            </Principal>
+            <Dependent Role="Intercambio">
+              <PropertyRef Name="IdLibroOfrecido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -145,14 +149,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumModelStoreContainer">
+        <EntityContainer Name="FarumModelStoreContainer">
           <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Genero" EntityType="Self.Genero" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Intercambio" EntityType="Self.Intercambio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="fk_inter_libro" Association="Self.fk_inter_libro">
+          <AssociationSet Name="fk_inter_libroelegido" Association="Self.fk_inter_libroelegido">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="Intercambio" EntitySet="Intercambio" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inter_libroofrecido" Association="Self.fk_inter_libroofrecido">
             <End Role="Libro" EntitySet="Libro" />
             <End Role="Intercambio" EntitySet="Intercambio" />
           </AssociationSet>
@@ -181,7 +188,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ForumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FarumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="IdAutor" />
@@ -209,11 +216,14 @@
           <Property Name="IdUsuDestino" Type="Int32" />
           <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaIniciado" Type="DateTime" Precision="0" />
+          <Property Name="HoraIntercambio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="FechaAceptado" Type="DateTime" Precision="0" />
-          <Property Name="IdLibro" Type="Int32" />
+          <Property Name="IdLibroElegido" Type="Int32" />
+          <Property Name="IdLibroOfrecido" Type="Int32" />
           <Property Name="Activo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Estado" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Libro" Relationship="Self.fk_inter_libro" FromRole="Intercambio" ToRole="Libro" />
+          <NavigationProperty Name="Libro" Relationship="Self.fk_inter_libroelegido" FromRole="Intercambio" ToRole="Libro" />
+          <NavigationProperty Name="Libro1" Relationship="Self.fk_inter_libroofrecido" FromRole="Intercambio" ToRole="Libro" />
           <NavigationProperty Name="Usuario" Relationship="Self.fk_inter_usudest" FromRole="Intercambio" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.fk_inter_usuini" FromRole="Intercambio" ToRole="Usuario" />
         </EntityType>
@@ -234,18 +244,9 @@
           <Property Name="Activo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Autor" Relationship="Self.fk_libro_autor" FromRole="Libro" ToRole="Autor" />
           <NavigationProperty Name="Genero" Relationship="Self.fk_libro_genero" FromRole="Libro" ToRole="Genero" />
-          <NavigationProperty Name="Intercambio" Relationship="Self.fk_inter_libro" FromRole="Libro" ToRole="Intercambio" />
+          <NavigationProperty Name="Intercambio" Relationship="Self.fk_inter_libroelegido" FromRole="Libro" ToRole="Intercambio" />
+          <NavigationProperty Name="Intercambio1" Relationship="Self.fk_inter_libroofrecido" FromRole="Libro" ToRole="Intercambio" />
           <NavigationProperty Name="Usuario" Relationship="Self.fk_libro_usuaio" FromRole="Libro" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -286,7 +287,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_inter_libro">
+        <Association Name="fk_inter_libroelegido">
           <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
           <End Role="Intercambio" Type="Self.Intercambio" Multiplicity="*" />
           <ReferentialConstraint>
@@ -294,7 +295,19 @@
               <PropertyRef Name="IdLibro" />
             </Principal>
             <Dependent Role="Intercambio">
+              <PropertyRef Name="IdLibroElegido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_inter_libroofrecido">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="0..1" />
+          <End Role="Intercambio" Type="Self.Intercambio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
               <PropertyRef Name="IdLibro" />
+            </Principal>
+            <Dependent Role="Intercambio">
+              <PropertyRef Name="IdLibroOfrecido" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -334,12 +347,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ForumEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FarumEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Autor" EntityType="Self.Autor" />
           <EntitySet Name="Genero" EntityType="Self.Genero" />
           <EntitySet Name="Intercambio" EntityType="Self.Intercambio" />
           <EntitySet Name="Libro" EntityType="Self.Libro" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <AssociationSet Name="fk_libro_autor" Association="Self.fk_libro_autor">
             <End Role="Autor" EntitySet="Autor" />
@@ -349,7 +361,11 @@
             <End Role="Genero" EntitySet="Genero" />
             <End Role="Libro" EntitySet="Libro" />
           </AssociationSet>
-          <AssociationSet Name="fk_inter_libro" Association="Self.fk_inter_libro">
+          <AssociationSet Name="fk_inter_libroelegido" Association="Self.fk_inter_libroelegido">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="Intercambio" EntitySet="Intercambio" />
+          </AssociationSet>
+          <AssociationSet Name="fk_inter_libroofrecido" Association="Self.fk_inter_libroofrecido">
             <End Role="Libro" EntitySet="Libro" />
             <End Role="Intercambio" EntitySet="Intercambio" />
           </AssociationSet>
@@ -371,9 +387,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ForumModelStoreContainer" CdmEntityContainer="ForumEntities">
+        <EntityContainerMapping StorageEntityContainer="FarumModelStoreContainer" CdmEntityContainer="FarumEntities">
           <EntitySetMapping Name="Autor">
-            <EntityTypeMapping TypeName="ForumModel.Autor">
+            <EntityTypeMapping TypeName="FarumModel.Autor">
               <MappingFragment StoreEntitySet="Autor">
                 <ScalarProperty Name="IdAutor" ColumnName="IdAutor" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -382,7 +398,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genero">
-            <EntityTypeMapping TypeName="ForumModel.Genero">
+            <EntityTypeMapping TypeName="FarumModel.Genero">
               <MappingFragment StoreEntitySet="Genero">
                 <ScalarProperty Name="IdGenero" ColumnName="IdGenero" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -391,22 +407,24 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Intercambio">
-            <EntityTypeMapping TypeName="ForumModel.Intercambio">
+            <EntityTypeMapping TypeName="FarumModel.Intercambio">
               <MappingFragment StoreEntitySet="Intercambio">
                 <ScalarProperty Name="IdIntercambio" ColumnName="IdIntercambio" />
                 <ScalarProperty Name="IdUsuIni" ColumnName="IdUsuIni" />
                 <ScalarProperty Name="IdUsuDestino" ColumnName="IdUsuDestino" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="FechaIniciado" ColumnName="FechaIniciado" />
+                <ScalarProperty Name="HoraIntercambio" ColumnName="HoraIntercambio" />
                 <ScalarProperty Name="FechaAceptado" ColumnName="FechaAceptado" />
-                <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
+                <ScalarProperty Name="IdLibroElegido" ColumnName="IdLibroElegido" />
+                <ScalarProperty Name="IdLibroOfrecido" ColumnName="IdLibroOfrecido" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Libro">
-            <EntityTypeMapping TypeName="ForumModel.Libro">
+            <EntityTypeMapping TypeName="FarumModel.Libro">
               <MappingFragment StoreEntitySet="Libro">
                 <ScalarProperty Name="IdLibro" ColumnName="IdLibro" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -422,19 +440,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ForumModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="ForumModel.Usuario">
+            <EntityTypeMapping TypeName="FarumModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />

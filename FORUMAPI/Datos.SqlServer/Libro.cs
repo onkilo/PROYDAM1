@@ -18,6 +18,7 @@ namespace Datos.SqlServer
         public Libro()
         {
             this.Intercambio = new HashSet<Intercambio>();
+            this.Intercambio1 = new HashSet<Intercambio>();
         }
     
         public int IdLibro { get; set; }
@@ -36,6 +37,8 @@ namespace Datos.SqlServer
         public virtual Genero Genero { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Intercambio> Intercambio { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Intercambio> Intercambio1 { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace Datos.SqlServer
         public virtual DbSet<Genero> Genero { get; set; }
         public virtual DbSet<Intercambio> Intercambio { get; set; }
         public virtual DbSet<Libro> Libro { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }
 }

@@ -11,23 +11,23 @@ namespace Datos.SqlServer
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Intercambio
     {
         public int IdIntercambio { get; set; }
-        
         public Nullable<int> IdUsuIni { get; set; }
-        
         public Nullable<int> IdUsuDestino { get; set; }
         public string Direccion { get; set; }
         public Nullable<System.DateTime> FechaIniciado { get; set; }
+        public string HoraIntercambio { get; set; }
         public Nullable<System.DateTime> FechaAceptado { get; set; }
-        public Nullable<int> IdLibro { get; set; }
+        public Nullable<int> IdLibroElegido { get; set; }
+        public Nullable<int> IdLibroOfrecido { get; set; }
         public string Activo { get; set; }
         public string Estado { get; set; }
     
         public virtual Libro Libro { get; set; }
+        public virtual Libro Libro1 { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }
     }
