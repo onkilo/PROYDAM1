@@ -20,11 +20,11 @@ namespace Datos.SqlServer
         public string Direccion { get; set; }
         public Nullable<System.DateTime> FechaIniciado { get; set; }
         public string HoraIntercambio { get; set; }
-        public Nullable<System.DateTime> FechaAceptado { get; set; }
         public Nullable<int> IdLibroElegido { get; set; }
         public Nullable<int> IdLibroOfrecido { get; set; }
         public string Activo { get; set; }
         public string Estado { get; set; }
+        public Nullable<System.DateTime> FechaIntercambio { get; set; }
     
         public virtual Libro Libro { get; set; }
         public virtual Libro Libro1 { get; set; }

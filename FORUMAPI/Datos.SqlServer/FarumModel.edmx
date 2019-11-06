@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FarumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FarumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autor">
           <Key>
             <PropertyRef Name="IdAutor" />
@@ -30,8 +30,8 @@
           <Property Name="IdUsuDestino" Type="int" />
           <Property Name="Direccion" Type="varchar" MaxLength="100" />
           <Property Name="FechaIniciado" Type="date" />
+          <Property Name="FechaIntercambio" Type="date" />
           <Property Name="HoraIntercambio" Type="varchar" MaxLength="10" />
-          <Property Name="FechaAceptado" Type="date" />
           <Property Name="IdLibroElegido" Type="int" />
           <Property Name="IdLibroOfrecido" Type="int" />
           <Property Name="Activo" Type="char" MaxLength="2" />
@@ -184,8 +184,7 @@
             <End Role="Libro" EntitySet="Libro" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FarumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -217,7 +216,6 @@
           <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="FechaIniciado" Type="DateTime" Precision="0" />
           <Property Name="HoraIntercambio" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="FechaAceptado" Type="DateTime" Precision="0" />
           <Property Name="IdLibroElegido" Type="Int32" />
           <Property Name="IdLibroOfrecido" Type="Int32" />
           <Property Name="Activo" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
@@ -226,6 +224,7 @@
           <NavigationProperty Name="Libro1" Relationship="Self.fk_inter_libroofrecido" FromRole="Intercambio" ToRole="Libro" />
           <NavigationProperty Name="Usuario" Relationship="Self.fk_inter_usudest" FromRole="Intercambio" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.fk_inter_usuini" FromRole="Intercambio" ToRole="Usuario" />
+          <Property Name="FechaIntercambio" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Libro">
           <Key>
@@ -409,13 +408,13 @@
           <EntitySetMapping Name="Intercambio">
             <EntityTypeMapping TypeName="FarumModel.Intercambio">
               <MappingFragment StoreEntitySet="Intercambio">
+                <ScalarProperty Name="FechaIntercambio" ColumnName="FechaIntercambio" />
                 <ScalarProperty Name="IdIntercambio" ColumnName="IdIntercambio" />
                 <ScalarProperty Name="IdUsuIni" ColumnName="IdUsuIni" />
                 <ScalarProperty Name="IdUsuDestino" ColumnName="IdUsuDestino" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="FechaIniciado" ColumnName="FechaIniciado" />
                 <ScalarProperty Name="HoraIntercambio" ColumnName="HoraIntercambio" />
-                <ScalarProperty Name="FechaAceptado" ColumnName="FechaAceptado" />
                 <ScalarProperty Name="IdLibroElegido" ColumnName="IdLibroElegido" />
                 <ScalarProperty Name="IdLibroOfrecido" ColumnName="IdLibroOfrecido" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />

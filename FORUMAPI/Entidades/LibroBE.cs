@@ -20,6 +20,8 @@ namespace Entidades
         public Nullable<int> IdUsuario { get; set; }
         public string Activo { get; set; }
 
+        public string Imagen64 { get; set; }
+
         public AutorBE Autor { get; set; }
         public GeneroBE Genero { get; set; }
         public UsuarioBE Usuario { get; set; }
