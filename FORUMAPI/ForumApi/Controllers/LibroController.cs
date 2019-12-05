@@ -2,6 +2,7 @@
 using Negocio;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,10 +38,24 @@ namespace ForumApi.Controllers
         }
 
         [HttpGet]
+        [Route("api/Libro/Genero/{idGenero}/NoUsuario/{idUsuario}")]
+        public IEnumerable<LibroBE> GetByGeneroNoUsuario(int idGenero, int idUsuario)
+        {
+            return manager.GetByGeneroNoUsuario(idGenero, idUsuario);
+        }
+
+        [HttpGet]
         [Route("api/Libro/Nombre/{nombre}")]
         public IEnumerable<LibroBE> GetByNombre(string nombre)
         {
             return manager.GetByNombre(nombre);
+        }
+
+        [HttpGet]
+        [Route("api/Libro/Nombre/{nombre}/NoUsuario/{idUsuario}")]
+        public IEnumerable<LibroBE>GetByNombreNoUsuario(int idUsuario, string nombre)
+        {
+            return manager.GetByNombreNoUsuario(idUsuario, nombre);
         }
 
         public LibroBE Get(int id)
@@ -55,6 +70,12 @@ namespace ForumApi.Controllers
             if(libro.Imagen64 != null && libro.Imagen64 != "")
             {
                 string path = HttpContext.Current.Server.MapPath("~/Upload/Libro/");
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
                 byte[] img = Convert.FromBase64String(libro.Imagen64);
 
                 if(!System.IO.File.Exists(path + libro.Imagen))

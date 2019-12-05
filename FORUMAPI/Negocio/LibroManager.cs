@@ -57,11 +57,40 @@ namespace Negocio
             return libros;
         }
 
+        public List<LibroBE> GetByGeneroNoUsuario(int idGenero, int idUsuario)
+        {
+            List<LibroBE> libros = new List<LibroBE>();
+            List<Libro> aux = context.Libro
+                .Where(l => l.Activo == "01" && l.IdGenero == idGenero && l.IdUsuario !=idUsuario)
+                .ToList();
+
+            foreach (Libro l in aux)
+            {
+                libros.Add(Utilities.ReadLibro(l));
+            }
+            return libros;
+        }
+
         public List<LibroBE> GetByNombre(string nombre)
         {
             List<LibroBE> libros = new List<LibroBE>();
             List<Libro> aux = context.Libro
                 .Where(l => l.Activo == "01" && l.Nombre.Contains(nombre))
+                .ToList();
+
+            foreach (Libro l in aux)
+            {
+                libros.Add(Utilities.ReadLibro(l));
+            }
+
+            return libros;
+        }
+
+        public List<LibroBE> GetByNombreNoUsuario(int idUsuario, string nombre)
+        {
+            List<LibroBE> libros = new List<LibroBE>();
+            List<Libro> aux = context.Libro
+                .Where(l => l.Activo == "01" && l.Nombre.Contains(nombre) && l.IdUsuario != idUsuario)
                 .ToList();
 
             foreach (Libro l in aux)
