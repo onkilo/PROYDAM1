@@ -49,5 +49,12 @@ namespace ForumApi.Controllers
         {
             return manager.Login(usuario.Correo, usuario.Contrasenia);
         }
+
+        [HttpPut]
+        [Route("api/Usuario/Datos")]
+        public void ActualizaDatos(UsuarioBE usuario)
+        {
+            manager.ActualizarDatos(usuario);
+        }
     }
 }

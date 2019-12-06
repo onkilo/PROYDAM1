@@ -112,5 +112,18 @@ namespace Negocio
             }
             return usuario;
         }
+
+        public void ActualizarDatos(UsuarioBE usuario)
+        {
+            Usuario u = context.Usuario.Find(usuario.IdUsuario);
+            u.Nombre = usuario.Nombre;
+            u.Correo = usuario.Correo;
+            u.Telefono = usuario.Telefono;
+            u.Direccion = usuario.Direccion;
+            u.Activo = "01";
+
+            context.Entry(u).State = EntityState.Modified;
+            context.SaveChanges();
+        }
     }
 }

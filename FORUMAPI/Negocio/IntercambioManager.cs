@@ -87,6 +87,20 @@ namespace Negocio
             i.Estado = estado;
             context.Entry(i).State = EntityState.Modified;
             context.SaveChanges();
+            if(estado == "02")
+            {
+                Libro lElegido = context.Libro.Find(i.IdLibroElegido);
+                lElegido.Activo = "00";
+
+                Libro lOfrecido = context.Libro.Find(i.IdLibroOfrecido);
+                lOfrecido.Activo = "00";
+
+                context.Entry(lOfrecido).State = EntityState.Modified;
+                context.Entry(lElegido).State = EntityState.Modified;
+
+                context.SaveChanges();
+            }
+
         }
 
         private IntercambioBE ReadIntercambio(Intercambio i)
